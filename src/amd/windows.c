@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <memory.h>
 
 void amd_initialize(cpuid_ctx* ctx)
 {
@@ -29,4 +30,17 @@ void amd_get_brand_str(cpuid_ctx* ctx)
     {
         printf("Processor does not support brand string.\n");
     }
+}
+
+void amd_get_vendor(cpuid_ctx *ctx) {
+    int vendor[4];
+
+    __cpuid(ctx->registers, 0x00000000);
+
+    vendor[0] = ctx->ebx;
+    vendor[1] = ctx->edx;
+    vendor[2] = ctx->ecx;
+    vendor[3] = '\0';
+
+    printf("%s\n", (char *)vendor);
 }
