@@ -3,9 +3,9 @@
 #include <stdio.h>
 
 #ifdef _WIN32
-# include "amd_windows.h"
+# include "amd/windows.h"
 #else
-# include "amd_linux.h"
+# include "amd/linux.h"
 #endif // _WIN32
 
 int main() {

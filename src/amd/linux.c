@@ -1,4 +1,4 @@
-#include "amd_linux.h"
+#include "cpuid.h"
 
 #include <assert.h>
 #include <stdbool.h>
