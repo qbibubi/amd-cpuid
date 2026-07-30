@@ -1,6 +1,8 @@
 /**
  * @file cpuid.h
  * @brief Header containing universal knowledge of AMD CPUID architecture design
+ * 
+ * @note Functionality based on OS is split between `windows.c` and `linux.c` source files
  */
 #pragma once
 
@@ -8,6 +10,13 @@
 #define AMD_EXTENDED_LEAF_2 0x80000002
 #define AMD_EXTENDED_LEAF_3 0x80000003
 #define AMD_EXTENDED_LEAF_4 0x80000004
+
+typedef enum _registers {
+    EAX,
+    EBX,
+    ECX,
+    EDX
+} registers;
 
 typedef struct _cpuid_ctx {
     union {
