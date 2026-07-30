@@ -11,13 +11,6 @@
 #define AMD_EXTENDED_LEAF_3 0x80000003
 #define AMD_EXTENDED_LEAF_4 0x80000004
 
-typedef enum _registers {
-    EAX,
-    EBX,
-    ECX,
-    EDX
-} registers;
-
 typedef struct _cpuid_ctx {
     union {
         int registers[4];
@@ -29,3 +22,4 @@ typedef struct _cpuid_ctx {
 
 void amd_initialize(cpuid_ctx *ctx);
 void amd_get_brand_str(cpuid_ctx *ctx);
+void amd_get_vendor(cpuid_ctx *ctx);
