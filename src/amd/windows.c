@@ -9,7 +9,8 @@ void amd_initialize(cpuid_ctx* ctx)
 {
     assert(ctx != NULL);
 
-    __cpuid(ctx->registers, AMD_EXTENDED_LEAF);
+    __cpuid(ctx->registers, CPUID_FN8000_0000);
+
     printf("Max Extended Leaf: 0x%08X\n", ctx->eax);
 }
 
@@ -17,14 +18,14 @@ void amd_get_brand_str(cpuid_ctx* ctx)
 {
     assert(ctx != NULL);
 
-    if (ctx->eax >= AMD_EXTENDED_LEAF_4)
+    if (ctx->eax >= CPUID_FN8000_0004)
     {
         int brand[12];
-        __cpuid(&brand[0], AMD_EXTENDED_LEAF_2);
-        __cpuid(&brand[4], AMD_EXTENDED_LEAF_3);
-        __cpuid(&brand[8], AMD_EXTENDED_LEAF_4);
+        __cpuid(&brand[0], CPUID_FN8000_0002);
+        __cpuid(&brand[4], CPUID_FN8000_0003);
+        __cpuid(&brand[8], CPUID_FN8000_0004);
 
-        printf("%s\n", (char*)brand);
+        printf("CPU Brand: %s\n", (char*)brand);
     }
     else
     {
@@ -32,10 +33,13 @@ void amd_get_brand_str(cpuid_ctx* ctx)
     }
 }
 
-void amd_get_vendor(cpuid_ctx *ctx) {
+void amd_get_vendor(cpuid_ctx* ctx)
+{
+    assert(ctx != NULL);
+
     int vendor[4];
 
-    __cpuid(ctx->registers, 0x00000000);
+    __cpuid(ctx->registers, CPUID_FN0000_0000);
 
     vendor[0] = ctx->ebx;
     vendor[1] = ctx->edx;
