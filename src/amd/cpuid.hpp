@@ -1,10 +1,11 @@
 /**
- * @file cpuid.h
+ * @file cpuid.hpp
  * @brief Header containing universal knowledge of AMD CPUID architecture design
  *
  * @note Functionality based on OS is split between `windows.c` and `linux.c` source files
  */
 #pragma once
+#include <cstdint>
 
 #define CPUID_FN0000_0000 0x00000000
 #define CPUID_FN0000_0001 0x00000001
@@ -18,21 +19,31 @@
 #define CPUID_FN8000_0003 0x80000003
 #define CPUID_FN8000_0004 0x80000004
 
-typedef struct _cpuid_ctx
+#ifdef __cplusplus
+namespace CpuId
 {
-    union
-    {
-        int registers[4];
+#endif //  __cplusplus
 
-        struct
+    struct Context
+    {
+        union
         {
-            int eax, ebx, ecx, edx;
+            int32_t Registers[4];
+
+            struct
+            {
+                int32_t Eax, Ebx, Ecx, Edx;
+            };
         };
     };
-} cpuid_ctx, *pcpuid_ctx;
 
-void amd_initialize(cpuid_ctx* ctx);
-void amd_get_brand_str(cpuid_ctx* ctx);
-void amd_get_vendor(cpuid_ctx* ctx);
-void amd_get_version_info(cpuid_ctx* ctx);
-void amd_get_features(cpuid_ctx* ctx);
+    void Initialize();
+    void GetBrandStr();
+    void GetVendor();
+    void GetVersionInfo();
+    void GetFeatures();
+    void Print();
+
+#ifdef __cplusplus
+} // namespace cpuid
+#endif //  __cplusplus

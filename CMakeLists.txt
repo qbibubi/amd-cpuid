@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(AMD-CPUID LANGUAGES C)
+project(AMD-CPUID LANGUAGES C CXX)
 
 set(SOURCES
-    src/main.c
+    src/main.cpp
 )
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    list(APPEND SOURCES src/amd/linux.c)
+    list(APPEND SOURCES src/amd/linux.cpp)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    list(APPEND SOURCES src/amd/windows.c)
+    list(APPEND SOURCES src/amd/windows.cpp)
 else()
     message(WARNING "Unsupported operating system: ${CMAKE_SYSTEM_NAME}. Build might fail.")
 endif()
@@ -24,4 +24,6 @@ target_include_directories(amd-cpuid PRIVATE
 set_target_properties(amd-cpuid PROPERTIES
     C_STANDARD 11
     C_STANDARD_REQUIRED YES
+    CXX_STANDARD 23
+    CXX_STANDARD_REQUIRED YES
 )
